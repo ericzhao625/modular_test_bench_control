@@ -1,15 +1,25 @@
 # modular_test_bench_control
 Python script for controlling a test bench consisting of conveyors and a robotic arm. Custom module for basic SureServo2 EtherNet/IP conveyor control included.
 
+# Usage
+
 Video demo with explanation: https://youtu.be/Ev3M4YpQl8c
 
 Short demo of routine created with the test bench:
 
 ![short demo](https://user-images.githubusercontent.com/56004971/211133881-f716e649-4394-4f4e-ba23-15e3a2d261c2.gif)
 
-# Usage
-Th
+This test bench was designed to automate the testing of new gripper and vacuum designs. Using the test bench, it is possible through the GUI to:
+1. Test different gripper designs on different parcels
+2. Jog the pick conveyor to save a starting point for the parcel to be picked up from (the system will move the parcel to this exact location each cycle of the routine)
+3. Jog the arm to save waypoints and create your own custom routine (with vacuum and blowoff points and delays)
+4. Run the routine X number of times to collect statistical data for analysis
 
+![image](https://user-images.githubusercontent.com/56004971/211138910-0a98854a-52cd-4e15-88e2-75f746dd84bf.png)
+
+![image](https://user-images.githubusercontent.com/56004971/211138990-1683f8a4-ce05-4d8a-8ac1-a910f56e0d2d.png)
+
+This process is best seen in the video demo above, the short GIF demonstrates a custom routine running on the test bench after being set up in the GUI.
 
 # Development
 Everything below documents some background on the development of this project.
@@ -51,9 +61,11 @@ Additionally, a ProtosX digital output module was used to turn on and off the so
 The VFD, servo drive, ProtosX module, FANUC arm, as well as the PC running this python script were all connected to an Ethernet network switch.
 
 # Software Design
-Most of the software related documentation can be found documented in the files themselves, as well as the "Usage" description above.
-
 To control the servo motor through a python script communicating through EtherNet/IP, I created a custom SureServo2 driver which can be found at: https://github.com/ericzhao625/modular_test_bench_control/blob/main/src/sure_servo_2_control.py
 The driver allows for a user to create custom "PATHS" that are saved within the drive. These paths can be either relative position (e.g. number of turns from current position), absolute position (e.g. number of turns from the set ORIGIN), or constant speed control. Examples of using the driver in separate code can be found in the main function in the file itself, or in the automated routine sample: https://github.com/ericzhao625/modular_test_bench_control/blob/main/src/automated_routine.py
 
 Additionally, I created a basic driver for ModbusTCP control of the Yaskawa v1000 VFD which controlled the "place" conveyor. Communication with the FANUC arm was facilited using the previous co-op's work with fanucpy, and communication with the ProtosX module was implemented using pymodbus.
+
+Careful consideration was made to limit the arm's movement while being jogged. There are software limitations on how far the user can move the arm in order to prevent potential collisions between the arm and the conveyors, barriers, and package itself. These can be seen as the limits on the sliders.
+
+More documentation related to the code can be found in the files themselves.
