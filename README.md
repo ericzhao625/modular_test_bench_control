@@ -9,7 +9,11 @@ Short demo of routine created with the test bench:
 
 ![short demo](https://user-images.githubusercontent.com/56004971/211133881-f716e649-4394-4f4e-ba23-15e3a2d261c2.gif)
 
-This test bench was designed to automate the testing of new gripper and vacuum designs. Using the test bench, it is possible through the GUI to:
+The main script running the test bench can be found in https://github.com/ericzhao625/modular_test_bench_control/blob/main/src/main.py 
+
+(Pardon the code mess, most of the GUI itself was developed in the last 24-hours of my co-op term 👀, for a more digestable view into the BACKEND controlling the test bench, you can also view https://github.com/ericzhao625/modular_test_bench_control/blob/main/src/automated_routine.py)
+
+This test bench was designed to automate the testing of new gripper and vacuum designs. Using the test bench, it is possible (through the GUI) to:
 1. Test different gripper designs on different parcels
 2. Jog the pick conveyor to save a starting point for the parcel to be picked up from (the system will move the parcel to this exact location each cycle of the routine)
 3. Jog the arm to save waypoints and create your own custom routine (with vacuum and blowoff points and delays)
